@@ -33,9 +33,10 @@ def censor_files(files, banned_words):
                     
                     
 def get_files() -> list[str]:
-    book1 = Book("book1", "There once was a panda that lived in the forest with a group of 10 (ten) other pandas. It was a hungry panda and was always thinking and asking \"When will it be meal time?\" He figures it's because he is constantly growing. Its hunger could not be satiated. \"Is that John's?\", he asked.")
-    book2 = Book("book2", "\"I don't think so\", she said.")
-    bookshelf = BookShelf("./files", [book1, book2])
+    book1 = Book("book1", location='./backup')
+    book2 = Book("book2", location='./backup')
+    book3 = Book("book3", content='This is a small book.')
+    bookshelf = BookShelf("./bookshelf", [book1, book2])
 
     file_names = bookshelf.get_book_paths()
     return file_names
