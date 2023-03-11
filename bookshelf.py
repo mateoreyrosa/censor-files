@@ -1,6 +1,7 @@
 from typing import Optional
 from book import Book
 import os
+import pathlib
 class BookShelf:
     def __init__(self, books: Optional[list[Book]], output_path="./") -> None:
         self.books = books if books else []
@@ -27,9 +28,14 @@ class BookShelf:
             self.__create_book(book)
 
     def __create_book(self, book: Book) -> None:
-        # TODO: Copy file contents from backup to output dir
-        with open(f"{self.output_path}/{book.get_name()}.txt", "w") as file:
-            file.write(book.get_content())
+        pathlib.Path(self.output_path).mkdir(parents=True, exist_ok=True) 
+        with open(f"{self.output_path}/{book.get_name()}.txt", "w") as bookshelf:
+            if book.location:
+                with open(book.location, "r") as book_source:
+                    for line in book_source.readlines():
+                        bookshelf.write(line)
+            else:
+                bookshelf.write(book.get_content())
             
 
 
