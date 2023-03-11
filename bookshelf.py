@@ -30,11 +30,13 @@ class BookShelf:
     def __create_book(self, book: Book) -> None:
         pathlib.Path(self.output_path).mkdir(parents=True, exist_ok=True) 
         with open(f"{self.output_path}/{book.get_name()}.txt", "w") as bookshelf:
+            # Book passed as a file
             if book.location:
                 with open(book.location, "r") as book_source:
                     for line in book_source.readlines():
                         bookshelf.write(line)
             else:
+                # Book was passed as a string
                 bookshelf.write(book.get_content())
             
 
