@@ -6,4 +6,7 @@ class Banned:
 
     def get_words(self) -> set[str]:
         return self.words
+    
+    def print(self) -> None:
+        print("Banned Words:", self.words)
 

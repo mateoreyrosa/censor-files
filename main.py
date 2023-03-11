@@ -6,7 +6,6 @@ import os
 
 import string
 def censor_files(files, banned_words):
-    
     for file_path in files:
         with open(file_path, "r+") as file:
             print(file_path)
@@ -30,27 +29,25 @@ def censor_files(files, banned_words):
                     print(file.tell())
                     file.write("-" * len(word))
                     print(file.tell())
-                    
+
+    print("Banned words found and censored")
                     
 def get_files() -> list[str]:
-    book1 = Book("book1", location='./backup')
-    book2 = Book("book2", location='./backup')
+    book1 = Book.from_file("book1", dir='./books')
+    book2 = Book.from_file("book2", dir='./books')
     book3 = Book("book3", content='This is a small book.')
-    bookshelf = BookShelf("./bookshelf", [book1, book2])
+    bookshelf = BookShelf([book1, book2, book3], "./bookshelf")
 
     file_names = bookshelf.get_book_paths()
     return file_names
 
 def main():
-    words_to_ban = ["think", "thinking", "don't", "ten"]
+    words_to_ban = ["think", "thinking", "don't", "ten", "this"]
     banned_words = Banned(words_to_ban)
-    print(banned_words.get_words())
+    banned_words.print()
+
     file_names = get_files()
-    print(file_names)
     censor_files(file_names, banned_words.get_words())
-    print( banned_words.get_words())
-
-
 
 if __name__ == "__main__":
     main()
