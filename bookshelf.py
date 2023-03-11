@@ -3,9 +3,9 @@ from book import Book
 import os
 import pathlib
 class BookShelf:
-    def __init__(self, books: Optional[list[Book]], output_path="./") -> None:
+    def __init__(self, books: Optional[list[Book]], output_dir="./") -> None:
         self.books = books if books else []
-        self.output_path = output_path
+        self.output_dir = output_dir
         self.__create_bookshelf()
 
     def add_book(self, book: Book) -> None:
@@ -17,8 +17,8 @@ class BookShelf:
 
     def get_book_paths(self) -> list[str]:
         file_paths = []
-        for path in os.listdir(self.output_path):
-            file_path = os.path.join(self.output_path, path)
+        for path in os.listdir(self.output_dir):
+            file_path = os.path.join(self.output_dir, path)
             if os.path.isfile(file_path):
                 file_paths.append(file_path)
         return file_paths
@@ -28,10 +28,11 @@ class BookShelf:
             self.__create_book(book)
 
     def __create_book(self, book: Book) -> None:
-        pathlib.Path(self.output_path).mkdir(parents=True, exist_ok=True) 
-        with open(f"{self.output_path}/{book.get_name()}.txt", "w") as bookshelf:
+        pathlib.Path(self.output_dir).mkdir(parents=True, exist_ok=True) 
+        with open(f"{self.output_dir}/{book.get_name()}.txt", "w") as bookshelf:
             # Book passed as a file
             if book.location:
+                # Allow IO exceptions to fire
                 with open(book.location, "r") as book_source:
                     for line in book_source.readlines():
                         bookshelf.write(line)

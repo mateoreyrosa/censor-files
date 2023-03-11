@@ -32,21 +32,19 @@ def censor_files(files, banned_words):
 
     print("Banned words found and censored")
                     
-def get_files() -> list[str]:
+def create_bookshelf() -> list[str]:
     book1 = Book.from_file("book1", dir='./books')
     book2 = Book.from_file("book2", dir='./books')
     book3 = Book("book3", content='This is a small book.')
-    bookshelf = BookShelf([book1, book2, book3], "./bookshelf")
-
-    file_names = bookshelf.get_book_paths()
-    return file_names
+    bookshelf = BookShelf([book1, book2, book3], output_dir="./bookshelf")
+    return bookshelf
 
 def main():
     words_to_ban = ["think", "thinking", "don't", "ten", "this"]
     banned_words = Banned(words_to_ban)
     banned_words.print()
-
-    file_names = get_files()
+    bookshelf = create_bookshelf()
+    file_names = bookshelf.get_book_paths()
     censor_files(file_names, banned_words.get_words())
 
 if __name__ == "__main__":
